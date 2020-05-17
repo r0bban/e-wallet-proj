@@ -2,9 +2,10 @@
   <section class="card-stack">
     <Card
       stackMode
-      v-for="(card, index) in cardsInStack"
+      v-for="(card, index) in cards"
       :key="card.cardNumber"
       :card="card"
+      :stackIndex="index"
       :style="{top: index * 40 + 'px'}"
     />
   </section>
@@ -27,11 +28,11 @@ export default {
     cards: Array
   },
   computed: {
-    cardsInStack() {
-      return this.$store.getters.getCardList.filter(
-        card => card.cardNumber != this.$store.getters.getActiveCardNo
-      );
-    }
+    // cardsInStack() {
+    //   return this.$store.getters.getCardList.filter(
+    //     card => card.cardNumber != this.$store.getters.getActiveCardNo
+    //   );
+    // }
   },
 //    beforeMount(){
 //       this.cardsInStack = this.$store.getters.getCardList.filter(

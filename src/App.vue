@@ -8,6 +8,15 @@
   </div>
 </template>
 
+<script>
+export default {
+  beforeCreate(){
+    this.$store.commit('loadCardStack')
+  }
+  
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

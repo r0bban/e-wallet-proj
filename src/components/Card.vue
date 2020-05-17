@@ -6,7 +6,7 @@
       v-bind:style="{'background-image': bgColor}"
       class="credit-card"
       :class="{'edit' : editMode, 'active' : activeMode}"
-      v-on:click="cardClicked"
+      v-on:click="clickHandler"
     >
       <div class="icon-logo-wrapper">
         <img class="chip-icon" :src="require('@/assets/'+chipIcon)" />
@@ -37,7 +37,8 @@ export default {
     card: Object,
     activeMode: Boolean,
     editMode: Boolean,
-    stackMode: Boolean
+    stackMode: Boolean,
+    stackIndex: Number
   },
   methods: {
     groupStringBySize(str, size) {
@@ -52,9 +53,10 @@ export default {
       }
       return output;
     },
-    cardClicked(){
+    clickHandler(){
       if(this.stackMode){
-        this.$store.commit('setActiveCard', this.card.cardNumber)
+        // let comObject
+        this.$store.dispatch('swapActiveCard', {index: this.stackIndex, card: this.card})
       }
     }
   },
@@ -62,9 +64,14 @@ export default {
     bgColor() {
       if (this.editMode || this.activeMode) {
           return `linear-gradient(to left, ${this.vendor.bgColor}D9, ${this.vendor.bgColor})`;
-      } else return `linear-gradient(to top right, ${this.vendor.bgColor}D9, ${this.vendor.bgColor})`;
+      } else if(this.stackMode) {
+        return `linear-gradient(to top right, ${this.vendor.bgColor}D9, ${this.vendor.bgColor})`;
+        }  else {return `linear-gradient(to top right, purple, gray)`}
     },
     styledCardNumber() {
+      if(!this.card.cardNumber){
+      return "XXXX XXXX XXXX XXXX"
+      }
       return this.groupStringBySize(this.card.cardNumber, 4);
     },
     vendor() {
@@ -88,6 +95,7 @@ p,
 img {
   margin: 0;
   padding: 0;
+  // color: #8b8b8b;
 }
 
 .card {
@@ -97,6 +105,7 @@ img {
   &.inStack{
       position: absolute;
   }
+
   .title{
     font-size: 0.676rem;
     font-weight: 790;
@@ -118,11 +127,13 @@ img {
     text-shadow: -0.7px -0.7px gray;
     padding: 4vw;
     box-sizing: border-box;
+    background: white;
 
     .icon-logo-wrapper {
       display: flex;
       justify-content: space-between;
       flex-grow: 1;
+      align-items: flex-start;
 
       .chip-icon {
         width: 12.1vw;
@@ -132,7 +143,7 @@ img {
       .vendor-logo {
         width: 7.5vw;
         max-width: 33.3px;
-        align-self: flex-start;
+        // align-self: flex-start;
       }
     }
 
@@ -161,6 +172,7 @@ img {
       color: black;
       text-shadow: none;
     }
+
   }
 }
 

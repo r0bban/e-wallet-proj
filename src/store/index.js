@@ -6,38 +6,43 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     activeCardNo: '1234567891011123',
-    userCards: {
-  
-       '4321432143214321': {
+    cardStackList: [],
+    userCards: [
+       {
         cardNumber: "4321432143214321",
         cardHolderName: "CHRISTOFFER WALLENBERG",
         ValudThru: "0922",
         ccvVode: "196",
         vendor: "NINJA_BANK"
       },
-       '9879987998799879': {
+       {
         cardNumber: "9879987998799879",
         cardHolderName: "CHRISTOFFER WALLENBERG",
         ValudThru: "0318",
         ccvVode: "136",
         vendor: "BLOCK_CHAIN_INC"
       },
-      '6666666666666666': {
+       {
         cardNumber: "6666666666666666",
         cardHolderName: "CHRISTOFFER WALLENBERG",
-        ValudThru: "1023",
-        ccvVode: "123",
+        ValudThru: "0318",
+        ccvVode: "136",
         vendor: "EVIL_CORP"
       },
-      '1234567891011123': {
+      {
         cardNumber: "1234567891011123",
         cardHolderName: "CHRISTOFFER WALLENBERG",
         ValudThru: "1222",
         ccvVode: "456",
         vendor: "BITCOIN_INC"
-      }
-    },
+      },
+    ],
     vendors: {
+      NO_VENDOR: {
+        name: "DEFAULT",
+        logo: "vendor-bitcoin.svg",
+        bgColor: "#8b8b8b"
+      },
       BITCOIN_INC: {
         name: "BITCOIN INC",
         logo: "vendor-bitcoin.svg",
@@ -70,27 +75,45 @@ export default new Vuex.Store({
       return vendorList
     },
     getCardList(state) {
-      let cardList = []
-      for (const card in state.userCards) {
-        let cardInStore = state.userCards[card];
-        // cardInStore.cardNumber = card;
-        cardList.push(cardInStore)
-      }
-      return cardList
+      // let cardList = []
+      // for (const card in state.userCards) {
+      //   let cardInStore = state.userCards[card];
+      //   // cardInStore.cardNumber = card;
+      //   cardList.push(cardInStore)
+      // }
+      return state.userCards
     },
     getActiveCard(state) {
-      return state.userCards[state.activeCardNo]
+      return state.userCards.find(card => card.cardNumber == state.activeCardNo)
     },
     getActiveCardNo(state) {
       return state.activeCardNo
+    },
+    getCardStackList(state){
+      return state.cardStackList
     }
   },
   mutations: {
-    setActiveCard(state, payload) {
+    setActiveCardNo(state, payload) {
       state.activeCardNo = payload
+    },
+    loadCardStack(state){
+      state.cardStackList = state.userCards.filter(card=> card.cardNumber != state.activeCardNo)
+    },
+    addCardToStack(state, payload){
+      // state.cardStackList[payload.index] = payload.card;
+      state.cardStackList.splice(payload.index, 1, payload.card)
     }
+    
   },
   actions: {
+    swapActiveCard(context, payload) {
+      let activeCard = context.getters.getActiveCard
+      context.commit('setActiveCardNo',payload.card.cardNumber)//state.activeCardNo = payload.cardNumber;
+      context.commit('addCardToStack',{index: payload.index, card: activeCard})
+      // state.cardStackList[state.cardStackList.indexOf(payload)] = activeCard;
+
+    }
   },
   modules: {
   }

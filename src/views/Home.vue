@@ -2,7 +2,7 @@
   <section class="home">
     <Top :pageTitle="'E-WALLET'"/>
     <Card :title="'ACTIVE CARD'" :card="activeCard" activeMode/>
-    <CardStack/>
+    <CardStack :cards ="cardStack"/>
   </section>
 </template>
 
@@ -24,9 +24,9 @@ export default {
     activeCard(){
       return this.$store.getters.getActiveCard
     },
-    // cardStack(){
-    //   return this.$store.getters.getCardList.filter(card => card.cardNumber != this.$store.getters.getActiveCardNo)
-    // }
+    cardStack(){
+      return this.$store.getters.getCardStackList
+    }
   }
 };
 </script>
