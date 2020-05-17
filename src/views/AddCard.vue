@@ -1,7 +1,7 @@
 <template>
-  <section class="home">
-    <Top :pageTitle="'E-WALLET'"/>
-    <Card :title="'ACTIVE CARD'" :card="activeCard"/>
+  <section class="add-card">
+    <Top :pageTitle = "'ADD NEW CARD'"/>
+    <Card :title="'NEW CARD'"/>
   </section>
 </template>
 
@@ -10,15 +10,10 @@ import Top from "@/components/Top";
 import Card from "@/components/Card";
 
 export default {
-  name: "Home",
+  name: "AddCard",
   components: {
     Top: Top,
     Card: Card
-  },
-  computed:{
-    activeCard(){
-      return this.$store.getters.getActiveCard
-    }
   }
 };
 </script>
