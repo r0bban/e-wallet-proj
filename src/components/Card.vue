@@ -1,10 +1,12 @@
 <template>
-  <section class="card">
+  <section class="card"
+  :class="{'inStack' : stackMode}">
     <p class="title" v-if="title">{{title}}</p>
     <article
-      v-bind:style="{background: vendor.bgColor}"
+      v-bind:style="{'background-image': bgColor}"
       class="credit-card"
       :class="{'edit' : editMode, 'active' : activeMode}"
+      v-on:click="cardClicked"
     >
       <div class="icon-logo-wrapper">
         <img class="chip-icon" :src="require('@/assets/'+chipIcon)" />
@@ -34,7 +36,8 @@ export default {
     title: String,
     card: Object,
     activeMode: Boolean,
-    editMode: Boolean
+    editMode: Boolean,
+    stackMode: Boolean
   },
   methods: {
     groupStringBySize(str, size) {
@@ -48,9 +51,19 @@ export default {
         i = i + 3;
       }
       return output;
+    },
+    cardClicked(){
+      if(this.stackMode){
+        this.$store.commit('setActiveCard', this.card.cardNumber)
+      }
     }
   },
   computed: {
+    bgColor() {
+      if (this.editMode || this.activeMode) {
+          return `linear-gradient(to left, ${this.vendor.bgColor}D9, ${this.vendor.bgColor})`;
+      } else return `linear-gradient(to top right, ${this.vendor.bgColor}D9, ${this.vendor.bgColor})`;
+    },
     styledCardNumber() {
       return this.groupStringBySize(this.card.cardNumber, 4);
     },
@@ -63,10 +76,7 @@ export default {
       } else return "chip-light.svg";
     },
     valudThruStyled() {
-      let output = `${this.card.ValudThru.substring(
-        0,
-        2
-      )}/${this.card.ValudThru.substring(2, 4)}`;
+      let output = `${this.card.ValudThru.substring(0,2)}/${this.card.ValudThru.substring(2, 4)}`;
       return output;
     }
   }
@@ -83,6 +93,16 @@ img {
 .card {
   margin: 0 auto;
   max-width: min-content;
+  // position: relative;
+  &.inStack{
+      position: absolute;
+  }
+  .title{
+    font-size: 0.676rem;
+    font-weight: 790;
+    color:gray;
+    margin-bottom: 10px;
+  }
   .credit-card {
     display: flex;
     flex-direction: column;
@@ -106,13 +126,13 @@ img {
 
       .chip-icon {
         width: 12.1vw;
+        max-width: 53.72px;
         align-self: flex-end;
       }
       .vendor-logo {
         width: 7.5vw;
+        max-width: 33.3px;
         align-self: flex-start;
-        fill: black;
-        fill-opacity: 0.4;
       }
     }
 
@@ -145,9 +165,32 @@ img {
 }
 
 @media only screen and (min-width: 445px) {
-  .card .credit-card .card-number {
-    font-size: 31.2px;
-    font-weight: lighter;
+  .card {
+    .credit-card {
+          padding: 17.76px;
+
+      .chip-icon {
+        width: 53.72px;
+      }
+      .vendor-logo {
+        width: 33.3px;
+      }
+
+      .card-number {
+        font-size: 31.2px;
+        font-weight: lighter;
+        margin: 12.43px 0 35.52px 0;
+
+      }
+      .label {
+        font-size: 12.43px;
+        margin-bottom: 4.4px;
+      }
+      .data {
+        font-size: 19.1px;
+        font-weight: 595;
+      }
+    }
   }
 }
 </style>

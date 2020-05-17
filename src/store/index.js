@@ -5,8 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    activeCard: '6666666666666666',
+    activeCardNo: '1234567891011123',
     userCards: {
+  
+       '4321432143214321': {
+        cardNumber: "4321432143214321",
+        cardHolderName: "CHRISTOFFER WALLENBERG",
+        ValudThru: "0922",
+        ccvVode: "196",
+        vendor: "NINJA_BANK"
+      },
+       '9879987998799879': {
+        cardNumber: "9879987998799879",
+        cardHolderName: "CHRISTOFFER WALLENBERG",
+        ValudThru: "0318",
+        ccvVode: "136",
+        vendor: "BLOCK_CHAIN_INC"
+      },
       '6666666666666666': {
         cardNumber: "6666666666666666",
         cardHolderName: "CHRISTOFFER WALLENBERG",
@@ -58,16 +73,22 @@ export default new Vuex.Store({
       let cardList = []
       for (const card in state.userCards) {
         let cardInStore = state.userCards[card];
-        cardInStore.cardNumber = card;
+        // cardInStore.cardNumber = card;
         cardList.push(cardInStore)
       }
       return cardList
     },
     getActiveCard(state) {
-      return state.userCards[state.activeCard]
+      return state.userCards[state.activeCardNo]
+    },
+    getActiveCardNo(state) {
+      return state.activeCardNo
     }
   },
   mutations: {
+    setActiveCard(state, payload) {
+      state.activeCardNo = payload
+    }
   },
   actions: {
   },
