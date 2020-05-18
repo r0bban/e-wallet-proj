@@ -100,19 +100,23 @@ export default new Vuex.Store({
     loadCardStack(state){
       state.cardStackList = state.userCards.filter(card=> card.cardNumber != state.activeCardNo)
     },
-    addCardToStack(state, payload){
+    replaceCardInStack(state, payload){
       // state.cardStackList[payload.index] = payload.card;
       state.cardStackList.splice(payload.index, 1, payload.card)
+    },
+    addCardtoStack(state, payload){
+      state.cardStackList.push(payload)
     }
     
   },
   actions: {
     swapActiveCard(context, payload) {
       let activeCard = context.getters.getActiveCard
-      context.commit('setActiveCardNo',payload.card.cardNumber)//state.activeCardNo = payload.cardNumber;
-      context.commit('addCardToStack',{index: payload.index, card: activeCard})
-      // state.cardStackList[state.cardStackList.indexOf(payload)] = activeCard;
-
+      context.commit('setActiveCardNo',payload.card.cardNumber)
+      context.commit('replaceCardInStack',{index: payload.index, card: activeCard})
+    },
+    addNewCard(context, payload) {
+      context.commit('addCardtoStack',payload)
     }
   },
   modules: {

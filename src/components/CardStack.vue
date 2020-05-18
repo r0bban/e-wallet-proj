@@ -53,7 +53,7 @@ export default {
   justify-content: center;
   position: relative;
   margin: 10px auto;
-  height: 300px;
+  height: 400px;
   // background: chocolate;
 }
 </style>
