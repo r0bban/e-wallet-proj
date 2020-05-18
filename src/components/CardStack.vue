@@ -1,5 +1,7 @@
 <template>
-  <section class="card-stack">
+  <v-touch tag="section" class="card-stack"
+  v-on:swipedown="rotateCardStackDownwards"
+  v-on:swipeup="rotateCardStackUpwards">
     <Card
       stackMode
       v-for="(card, index) in cards"
@@ -8,7 +10,7 @@
       :stackIndex="index"
       :style="{'z-index': index}"
     />
-  </section>
+  </v-touch>
 </template>
 
 <script>
@@ -21,29 +23,21 @@ export default {
   },
   data() {
     return {
-      //   cardsInStack: this.cards
     };
+  },
+  methods: {
+    rotateCardStackDownwards() {
+      this.$store.commit("rotateCardStackDownwards");
+    },
+    rotateCardStackUpwards() {
+      this.$store.commit("rotateCardStackUpwards");
+    }
   },
   props: {
     cards: Array
   },
   computed: {
-    // cardsInStack() {
-    //   return this.$store.getters.getCardList.filter(
-    //     card => card.cardNumber != this.$store.getters.getActiveCardNo
-    //   );
-    // }
   }
-  //    beforeMount(){
-  //       this.cardsInStack = this.$store.getters.getCardList.filter(
-  //         card => card.cardNumber != this.$store.getters.getActiveCardNo
-  //       );
-  //   },
-  //   beforeUpdate(){
-  //       this.cardsInStack = this.$store.getters.getCardList.filter(
-  //         card => card.cardNumber != this.$store.getters.getActiveCardNo
-  //       );
-  //   }
 };
 </script>
 
@@ -59,11 +53,4 @@ export default {
     grid-auto-rows: 40px;
   }
 }
-// .card-stack {
-//   display: flex;
-//   justify-content: center;
-//   position: relative;
-//   margin: 10px auto;
-//   height: 400px;
-// }
 </style>

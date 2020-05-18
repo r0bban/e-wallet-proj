@@ -94,9 +94,6 @@ export default {
     display: flex;
     flex-direction: column;
     margin:3px;
-    // .label{
-    //   margin-bottom: 3px;
-    // }
 
     &.validation {
       flex-direction: row;

@@ -1,12 +1,13 @@
 <template>
   <section class="card"
-  :class="{'inStack' : stackMode}">
+  :class="{'inStack' : stackMode}"
+  v-if="!toBeHidden">
     <p class="title" v-if="title">{{title}}</p>
-    <article
+    <v-touch tag="article"
       v-bind:style="{backgroundImage: bgColor}"
       class="credit-card"
       :class="{'edit' : editMode, 'active' : activeMode}"
-      v-on:click="clickHandler"
+      v-on:tap="clickHandler"
     >
       <div class="icon-logo-wrapper">
         <img class="chip-icon" :src="require('@/assets/'+chipIcon)" />
@@ -21,7 +22,7 @@
         <p class="data card-holder">{{styledCardHolderName}}</p>
         <p class="data valid-thru">{{validThruStyled}}</p>
       </div>
-    </article>
+    </v-touch>
   </section>
 </template>
 
@@ -55,7 +56,6 @@ export default {
     },
     clickHandler(){
       if(this.stackMode){
-        // let comObject
         this.$store.dispatch('swapActiveCard', {index: this.stackIndex, card: this.card})
       }
     }
@@ -91,6 +91,12 @@ export default {
       return "FIRSTNAME LASTNAME"
       }
       return this.card.cardHolderName;
+    },
+    toBeHidden(){
+      if(this.stackMode && this.stackIndex>2){
+        return true
+      }
+      return false
     }
   }
 };
@@ -101,17 +107,12 @@ p,
 img {
   margin: 0;
   padding: 0;
-  // color: #8b8b8b;
 }
 
 .card {
   margin: 0 auto;
   max-width: min-content;
   
-  // &.inStack{
-  //     position: absolute;
-  // }
-
   .title{
     font-size: 0.676rem;
     font-weight: 790;

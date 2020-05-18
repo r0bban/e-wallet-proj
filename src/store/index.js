@@ -8,21 +8,21 @@ export default new Vuex.Store({
     activeCardNo: '1234567891011123',
     cardStackList: [],
     userCards: [
-       {
+      {
         cardNumber: "4321432143214321",
         cardHolderName: "CHRISTOFFER WALLENBERG",
         ValudThru: "0922",
         ccvVode: "196",
         vendor: "NINJA_BANK"
       },
-       {
+      {
         cardNumber: "9879987998799879",
         cardHolderName: "CHRISTOFFER WALLENBERG",
         ValudThru: "0318",
         ccvVode: "136",
         vendor: "BLOCK_CHAIN_INC"
       },
-       {
+      {
         cardNumber: "6666666666666666",
         cardHolderName: "CHRISTOFFER WALLENBERG",
         ValudThru: "0318",
@@ -75,12 +75,6 @@ export default new Vuex.Store({
       return vendorList
     },
     getCardList(state) {
-      // let cardList = []
-      // for (const card in state.userCards) {
-      //   let cardInStore = state.userCards[card];
-      //   // cardInStore.cardNumber = card;
-      //   cardList.push(cardInStore)
-      // }
       return state.userCards
     },
     getActiveCard(state) {
@@ -89,7 +83,7 @@ export default new Vuex.Store({
     getActiveCardNo(state) {
       return state.activeCardNo
     },
-    getCardStackList(state){
+    getCardStackList(state) {
       return state.cardStackList
     }
   },
@@ -97,27 +91,41 @@ export default new Vuex.Store({
     setActiveCardNo(state, payload) {
       state.activeCardNo = payload
     },
-    loadCardStack(state){
-      state.cardStackList = state.userCards.filter(card=> card.cardNumber != state.activeCardNo)
+    loadCardStack(state) {
+      state.cardStackList = state.userCards.filter(card => card.cardNumber != state.activeCardNo)
     },
-    replaceCardInStack(state, payload){
-      // state.cardStackList[payload.index] = payload.card;
+    replaceCardInStack(state, payload) {
       state.cardStackList.splice(payload.index, 1, payload.card)
     },
-    addCardtoStack(state, payload){
+    addCardtoStack(state, payload) {
       state.cardStackList.push(payload)
+    },
+    addCardtoUserCards(state, payload) {
+      state.userCards.push(payload)
+    },
+    rotateCardStackUpwards(state) {
+      if (state.cardStackList.length > 1) {
+        state.cardStackList.push(state.cardStackList[0])
+        state.cardStackList.splice(0, 1)
+      }
+    },
+    rotateCardStackDownwards(state) {
+      if (state.cardStackList.length > 1) {
+        state.cardStackList.unshift(state.cardStackList[state.cardStackList.length - 1])
+        state.cardStackList.splice(state.cardStackList.length - 1, 1)
+      }
     }
-    
+
   },
   actions: {
     swapActiveCard(context, payload) {
       let activeCard = context.getters.getActiveCard
-      context.commit('setActiveCardNo',payload.card.cardNumber)
-      context.commit('replaceCardInStack',{index: payload.index, card: activeCard})
+      context.commit('setActiveCardNo', payload.card.cardNumber)
+      context.commit('replaceCardInStack', { index: payload.index, card: activeCard })
     },
     addNewCard(context, payload) {
-      context.commit('addCardtoStack',payload)
-      // this.$router.push()
+      context.commit('addCardtoStack', payload)
+      context.commit('addCardtoUserCards', payload)
     }
   },
   modules: {
