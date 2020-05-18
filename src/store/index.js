@@ -39,7 +39,7 @@ export default new Vuex.Store({
     ],
     vendors: {
       NO_VENDOR: {
-        name: "DEFAULT",
+        name: "",
         logo: "vendor-bitcoin.svg",
         bgColor: "#8b8b8b"
       },
@@ -117,6 +117,7 @@ export default new Vuex.Store({
     },
     addNewCard(context, payload) {
       context.commit('addCardtoStack',payload)
+      // this.$router.push()
     }
   },
   modules: {

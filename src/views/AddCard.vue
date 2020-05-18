@@ -1,8 +1,8 @@
 <template>
   <section class="add-card">
-    <Top :pageTitle = "'ADD NEW CARD'"/>
-    <Card :card="card" :title="'NEW CARD'" editMode/>
-    <CardForm :card="card"/>
+    <Top :pageTitle="'ADD A NEW BANK CARD'" />
+    <Card :card="card" :title="'NEW CARD'" editMode />
+    <CardForm :card="card" />
   </section>
 </template>
 
@@ -13,16 +13,16 @@ import CardForm from "@/components/CardForm";
 
 export default {
   name: "AddCard",
-  data(){
-    return{
-      card:{
+  data() {
+    return {
+      card: {
         cardNumber: "",
         cardHolderName: "",
         ValudThru: "",
         ccvVode: "",
         vendor: "NO_VENDOR"
       }
-    }
+    };
   },
   components: {
     Top: Top,
@@ -33,4 +33,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.add-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+@media only screen and (min-width: 445px) {
+  .add-card {
+    justify-content: flex-start;
+  }
+}
 </style>

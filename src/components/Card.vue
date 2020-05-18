@@ -3,7 +3,7 @@
   :class="{'inStack' : stackMode}">
     <p class="title" v-if="title">{{title}}</p>
     <article
-      v-bind:style="{'background-image': bgColor}"
+      v-bind:style="{backgroundImage: bgColor}"
       class="credit-card"
       :class="{'edit' : editMode, 'active' : activeMode}"
       v-on:click="clickHandler"
@@ -18,8 +18,8 @@
         <p class="label valid-thru">VALID THRU</p>
       </div>
       <div class="data-wrapper">
-        <p class="data card-holder">{{card.cardHolderName}}</p>
-        <p class="data valid-thru">{{valudThruStyled}}</p>
+        <p class="data card-holder">{{styledCardHolderName}}</p>
+        <p class="data valid-thru">{{validThruStyled}}</p>
       </div>
     </article>
   </section>
@@ -82,9 +82,15 @@ export default {
         return "chip-dark.svg";
       } else return "chip-light.svg";
     },
-    valudThruStyled() {
+    validThruStyled() {
       let output = `${this.card.ValudThru.substring(0,2)}/${this.card.ValudThru.substring(2, 4)}`;
       return output;
+    },
+    styledCardHolderName(){
+      if(!this.card.cardHolderName){
+      return "FIRSTNAME LASTNAME"
+      }
+      return this.card.cardHolderName;
     }
   }
 };
@@ -101,10 +107,10 @@ img {
 .card {
   margin: 0 auto;
   max-width: min-content;
-  // position: relative;
-  &.inStack{
-      position: absolute;
-  }
+  
+  // &.inStack{
+  //     position: absolute;
+  // }
 
   .title{
     font-size: 0.676rem;
@@ -143,7 +149,6 @@ img {
       .vendor-logo {
         width: 7.5vw;
         max-width: 33.3px;
-        // align-self: flex-start;
       }
     }
 
