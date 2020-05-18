@@ -24,7 +24,8 @@
     <select v-model="card.vendor" name="vendors" id="vendors">
       <option v-for="vendor in vendorList" :key="vendor.id" v-bind:value="vendor.id">{{vendor.name}}</option>
     </select>
-    <button>ADD CARD</button>
+    <button
+    v-on:click="addCard">ADD CARD</button>
   </section>
 </template>
 
@@ -37,7 +38,16 @@ export default {
     vendorList() {
       return this.$store.getters.getVendorList;
     }
-  }
+  },
+    methods:{
+      addCard(){
+        this.$store.dispatch('addNewCard', this.card)
+        this.routeToHome()
+      },
+      routeToHome(){
+        this.$router.push({name: 'Home'})
+      }
+    }
 };
 </script>
 
