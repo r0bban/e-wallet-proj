@@ -1,7 +1,14 @@
 <template>
   <section class="card" :class="{'inStack' : stackMode}" v-if="!toBeHidden">
     <p class="title" v-if="title">{{title}}</p>
+    <p
+    v-if="!card"
+    class="template">
+    NO ACTIVE CARD
+    </p>
+
     <v-touch
+      v-if="card"
       tag="article"
       v-bind:style="{backgroundImage: bgColor}"
       class="credit-card"
@@ -109,10 +116,7 @@ export default {
       } else return "chip-light.svg";
     },
     validThruStyled() {
-      let output = `${this.card.ValudThru.substring(
-        0,
-        2
-      )}/${this.card.ValudThru.substring(2, 4)}`;
+      let output = `${this.card.ValudThru.substring(0,2)}/${this.card.ValudThru.substring(2, 4)}`;
       return output;
     },
     styledCardHolderName() {
@@ -148,7 +152,7 @@ img {
     color: gray;
     margin-bottom: 10px;
   }
-  .credit-card {
+  .credit-card, .template {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -244,6 +248,19 @@ img {
       font-size: 4.3vw;
       font-weight: 595;
     }
+  }
+  
+  .template{
+    justify-content: center;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    color: gray;
+    border: 1px solid gray;
+    border-radius: 8px;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 4vw;
+    box-sizing: border-box;
+    background: white;
   }
 }
 
