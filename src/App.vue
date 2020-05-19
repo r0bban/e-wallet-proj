@@ -14,8 +14,9 @@ export default {
 
 <style lang="scss">
 
-body{
-  margin:0
+html, body{
+  margin:0;
+  height:100%
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

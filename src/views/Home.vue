@@ -37,7 +37,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 
   .card-stack {
     margin-top: 1.2vh;

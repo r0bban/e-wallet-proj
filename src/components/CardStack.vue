@@ -2,6 +2,8 @@
   <v-touch tag="section" class="card-stack"
   v-on:swipedown="rotateCardStackDownwards"
   v-on:swipeup="rotateCardStackUpwards">
+  <p class="not-shown-cards"
+  v-if="notDisplayedCards">{{notDisplayedCards}} more cards</p>
     <Card
       stackMode
       v-for="(card, index) in cards"
@@ -37,6 +39,12 @@ export default {
     cards: Array
   },
   computed: {
+    notDisplayedCards(){
+      if(this.$store.getters.getCardStackList.length>3){
+        return this.$store.getters.getCardStackList.length-3;
+      }
+      return false
+    }
   }
 };
 </script>
@@ -46,6 +54,18 @@ export default {
   display: grid;
   grid-auto-rows: 4vh;
   margin: 10px auto;
+  position: relative;
+
+  .not-shown-cards{
+    position: absolute;
+    background: rgba(255, 255, 255, 0.877);
+    left: 30px;
+    z-index: 99;
+    padding: 3px 10px;
+    border: 0 none white;
+    border-radius: 10px;
+  }
+
 }
 
 @media only screen and (min-width: 445px) {

@@ -1,5 +1,5 @@
 <template>
-  <section class="card" :class="{'inStack' : stackMode}" v-if="!toBeHidden">
+  <section class="card" :class="{'inStack' : stackMode}">
     <p class="title" v-if="title">{{title}}</p>
     <p
     v-if="!card"
@@ -75,19 +75,20 @@ export default {
     },
     clickHandler() {
       if (this.stackMode && !this.deleteRequested) {
-        this.$store.dispatch("swapActiveCard", {
-          index: this.stackIndex,
-          card: this.card
-        });
+        // this.$store.dispatch("swapActiveCard", {index: this.stackIndex,card: this.card});
+        this.$store.dispatch("swapActiveCard", {index: this.stackIndex,card: this.card});
       }
     },
     cancelDeleteRequest(){
       this.deleteRequested = false
     },
     deleteRequest(){
-      this.deleteRequested = true
+      if(!this.editMode){
+        this.deleteRequested = true
+      }
     },
     deleteCard(){
+      this.deleteRequested = false
       this.$store.commit('deleteCard', this.card)
     }
   },
@@ -125,12 +126,12 @@ export default {
       }
       return this.card.cardHolderName;
     },
-    toBeHidden() {
-      if (this.stackMode && this.stackIndex > 2) {
-        return true;
-      }
-      return false;
-    }
+    // toBeHidden() {
+    //   if (this.stackMode && this.stackIndex > 2) {
+    //     return true;
+    //   }
+    //   return false;
+    // }
   }
 };
 </script>

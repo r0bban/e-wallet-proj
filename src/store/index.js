@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    activeCardNo: '',
+    activeCardNo: '4321432143214321',
     cardStackList: [],
     userCards: [
       {
@@ -89,7 +89,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setActiveCardNo(state, payload) {
-      state.activeCardNo = payload
+      state.activeCardNo = payload;
     },
     loadCardStack(state) {
       state.cardStackList = state.userCards.filter(card => card.cardNumber != state.activeCardNo)
@@ -118,14 +118,12 @@ export default new Vuex.Store({
       deleteCard(state, payload){
         if(payload.cardNumber != state.activeCardNo){
         state.cardStackList = state.cardStackList.filter(card => card.cardNumber != payload.cardNumber)
-        } else {
-        state.activeCardNo = '';
-        }
+        } else {state.activeCardNo = '';}
         state.userCards = state.userCards.filter(card => card.cardNumber != payload.cardNumber)
       },
       deleteCardFromStackList(state,payload){
         state.cardStackList = state.cardStackList.filter(card => card.cardNumber != payload.cardNumber)
-      }
+      },
   },
   actions: {
     swapActiveCard(context, payload) {

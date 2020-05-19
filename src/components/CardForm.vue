@@ -2,7 +2,7 @@
   <form class="register-card-form">
     <div class="wrapper card-number">
       <p class="label card-number">CARD NUMBER</p>
-      <input class="data card-number" type="text" v-model="card.cardNumber" />
+      <input class="data card-number" type="number" v-model="card.cardNumber" placeholder="1234 1234 1234 1234" />
     </div>
 
     <div class="wrapper card-holder">
@@ -12,17 +12,18 @@
         type="text"
         v-model="card.cardHolderName"
         placeholder="FIRSTNAME LASTNAME"
+        maxlength="23"
       />
     </div>
 
     <div class="wrapper validation">
       <div class="wrapper valid-thru">
         <p class="label valid-thru">VALID THRU</p>
-        <input class="label valid-thru" type="text" v-model="card.ValudThru" />
+        <input class="data valid-thru" type="number" v-model="card.ValudThru" @input="validThruValidator" />
       </div>
       <div class="wrapper ccv-code">
         <p class="label ccv-code">CCV</p>
-        <input class="data ccv-code" type="text" v-model="card.ccvVode" />
+        <input class="data ccv-code" type="number" v-model="card.ccvVode" @input="ccvCodeValidator"/>
       </div>
     </div>
     <div class="wrapper vendor">
@@ -47,7 +48,10 @@ export default {
   computed: {
     vendorList() {
       return this.$store.getters.getVendorList;
-    }
+    },
+    // ccvCodeValidator(event){
+    //   return event.target.value+1
+    // }
   },
   methods: {
     addCard() {
@@ -56,7 +60,19 @@ export default {
     },
     routeToHome() {
       this.$router.push({ name: "Home" });
-    }
+    },
+    ccvCodeValidator(event){
+      const incomingValue = event.target.value
+      if(this.card.ccvVode.length < 4){
+        this.card.ccvVode = incomingValue
+      } else{this.card.ccvVode = incomingValue.substring(0,3)}
+    },
+    validThruValidator(event){
+      const incomingValue = event.target.value
+      if(this.card.ValudThru.length < 5){
+        this.card.ValudThru = incomingValue
+      } else{this.card.ValudThru = incomingValue.substring(0,4)}
+    },
   }
 };
 </script>
