@@ -1,5 +1,5 @@
 <template>
-  <section class="register-card-form">
+  <form class="register-card-form">
     <div class="wrapper card-number">
       <p class="label card-number">CARD NUMBER</p>
       <input class="data card-number" type="text" v-model="card.cardNumber" />
@@ -36,7 +36,7 @@
       </select>
     </div>
     <button class="dark" v-on:click="addCard">ADD CARD</button>
-  </section>
+  </form>
 </template>
 
 <script>
@@ -88,6 +88,7 @@ export default {
     height: 2rem;
     padding-left: 0.5rem;
     font-size: 1rem;
+    background: white;
   }
 
   .wrapper {

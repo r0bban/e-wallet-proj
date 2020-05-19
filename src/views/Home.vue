@@ -24,7 +24,7 @@ export default {
       return this.$store.getters.getActiveCard;
     },
     cardStack() {
-      return this.$store.getters.getCardStackList;
+      return this.$store.getters.getCardStackList.filter((card, index, arr) => index >= arr.length-3);
     }
   }
 };
