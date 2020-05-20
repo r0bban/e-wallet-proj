@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <Top :pageTitle="'E-WALLET'" />
+    <Top :pageTitle="'E-WALLET $'" />
     <Card :title="'ACTIVE CARD'" :card="activeCard" activeMode />
     <CardStack :cards="cardStack" />
     <router-link :to="{name: 'AddCard'}" tag="button" class="add-card">ADD CARD</router-link>
